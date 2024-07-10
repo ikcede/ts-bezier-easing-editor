@@ -182,7 +182,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 
   const handleMouseMove = (event: MouseEvent) => {
     // Check if primary button is pressed
-    if (event.buttons == 1 && (downKnob1 || downKnob2)
+    if (event.buttons === 1 && (downKnob1 || downKnob2)
         && svgRef.current !== null) {
       const position = calculatePosition(event);
 

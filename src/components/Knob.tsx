@@ -96,12 +96,12 @@ const Knob: React.FC<KnobProps> = ({
 }) => {
   const [hover, setHover] = React.useState(false);
 
-  const tailX = xScale.scale(control == 1 ? 0 : 1);
-  const tailY = yScale.scale(control == 1 ? 0 : 1);
+  const tailX = xScale.scale(control === 1 ? 0 : 1);
+  const tailY = yScale.scale(control === 1 ? 0 : 1);
   const knobX = xScale.scale(
-      control == 1 ? bezier.x1 : bezier.x2);
+      control === 1 ? bezier.x1 : bezier.x2);
   const knobY = yScale.scale(
-      control == 1 ? bezier.y1 : bezier.y2);
+      control === 1 ? bezier.y1 : bezier.y2);
 
   const handleMouseEnter = (event: React.MouseEvent) => {
     setHover(true);

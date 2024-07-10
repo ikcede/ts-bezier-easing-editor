@@ -4,8 +4,6 @@ import BezierEditor from './components/BezierEditor';
 import { CubicBezier } from './model/cubic-bezier';
 
 function App() {
-
-  const [rows, setRows] = useState(4);
   const [bezier, setBezier] = 
       useState(new CubicBezier(0.25, 0.25, 0.75, 0.75));
 
@@ -26,7 +24,6 @@ function App() {
       <div className='component-wrapper'>
         <BezierEditor 
             initialBezier={bezier}
-            rows={rows}
             onBezierChange={onBezierChange}></BezierEditor>
       </div>
       <div>
