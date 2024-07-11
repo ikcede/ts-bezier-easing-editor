@@ -11,6 +11,7 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 * Deploy package
 * Configure for extended Y coordinates
 * Add tests
+* Support touch events
 
 ## Available Scripts
 

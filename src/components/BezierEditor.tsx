@@ -144,81 +144,104 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   const gridWidth = width - padding * 2;
   const gridHeight = height - padding * 2;
 
-  const xScale = new Scale(0, 1, x, x + gridWidth);
-  const yScale = new Scale(0, 1, y + gridHeight, y);
+  const xScale = React.useMemo(
+    () => new Scale(0, 1, x, x + gridWidth),
+    [x, gridWidth]
+  );
 
-  const handleDownKnob1 = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setDownKnob1(true);
-  }
+  const yScale = React.useMemo(
+    () => new Scale(0, 1, y + gridHeight, y),
+    [y, gridHeight]
+  );
 
-  const handleDownKnob2 = (e: React.MouseEvent) => {
-    e.preventDefault();
-    setDownKnob2(true);
-  }
+  const handleDownKnob1 = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      setDownKnob1(true);
+    }, []
+  );
+
+  const handleDownKnob2 = React.useCallback(
+    (e: React.MouseEvent) => {
+      e.preventDefault();
+      setDownKnob2(true);
+    }, []
+  );
 
   // Calculate the x and y values of the mouse position
   // constrained to the SVG
-  const calculatePosition = (e: MouseEvent) => {
-    const rect = svgRef.current!.getBoundingClientRect();
+  const calculatePosition = React.useCallback(
+    (e: MouseEvent) => {
+      const rect = svgRef.current!.getBoundingClientRect();
 
-    let calcX = e.clientX - rect.left;
-    let calcY = e.clientY - rect.top;
+      let calcX = e.clientX - rect.left;
+      let calcY = e.clientY - rect.top;
 
-    if (calcX < 0) {
-      calcX = 0;
-    } else if (calcX > width) {
-      calcX = width;
-    }
-
-    if (calcY < 0) {
-      calcY = 0;
-    } else if (calcY > height) {
-      calcY = height;
-    }
-
-    return [calcX, calcY];
-  };
-
-  const handleMouseMove = (event: MouseEvent) => {
-    // Check if primary button is pressed
-    if (event.buttons === 1 && (downKnob1 || downKnob2)
-        && svgRef.current !== null) {
-      const position = calculatePosition(event);
-
-      let newBezier: CubicBezier;
-      if (downKnob1) {
-        newBezier = new CubicBezier(
-            xScale.inverse(position[0]),
-            yScale.inverse(position[1]),
-            bezier.x2,
-            bezier.y2,
-        );
-      } else {
-        newBezier = new CubicBezier(
-            bezier.x1,
-            bezier.y1,
-            xScale.inverse(position[0]),
-            yScale.inverse(position[1]),
-        );
+      if (calcX < 0) {
+        calcX = 0;
+      } else if (calcX > width) {
+        calcX = width;
       }
-      setBezier(newBezier!);
-      onBezierChange(newBezier!);
 
-    } else if (downKnob1 || downKnob2) {
-      setDownKnob1(false);
-      setDownKnob2(false);
-    }
-  };
+      if (calcY < 0) {
+        calcY = 0;
+      } else if (calcY > height) {
+        calcY = height;
+      }
+
+      return [calcX, calcY];
+    }, [svgRef, height, width]
+  );
 
   // Set up a window listener so that moving the mouse out
   // of the SVG doesn't stop the drag
   React.useEffect(() => {
+
+    const handleMouseMove = (event: MouseEvent) => {
+      // Check if primary button is pressed
+      if (event.buttons === 1 && (downKnob1 || downKnob2)
+          && svgRef.current !== null) {
+        const position = calculatePosition(event);
+  
+        let newBezier: CubicBezier;
+        if (downKnob1) {
+          newBezier = new CubicBezier(
+              xScale.inverse(position[0]),
+              yScale.inverse(position[1]),
+              bezier.x2,
+              bezier.y2,
+          );
+        } else {
+          newBezier = new CubicBezier(
+              bezier.x1,
+              bezier.y1,
+              xScale.inverse(position[0]),
+              yScale.inverse(position[1]),
+          );
+        }
+        setBezier(newBezier!);
+        onBezierChange(newBezier!);
+  
+      } else if (downKnob1 || downKnob2) {
+        setDownKnob1(false);
+        setDownKnob2(false);
+      }
+    };
+
     window.addEventListener('mousemove', handleMouseMove);
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
     };
-  }, [downKnob1, downKnob2, svgRef, bezier]);
+  }, [
+      downKnob1,
+      downKnob2,
+      svgRef,
+      bezier,
+      calculatePosition,
+      xScale,
+      yScale,
+      onBezierChange
+  ]);
 
   const sharedKnobProps = {
     bezier: bezier,
