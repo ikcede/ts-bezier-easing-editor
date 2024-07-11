@@ -3,11 +3,8 @@
 A Typescript implementation of a bezier editor for the CSS easing 
 function with default styles resembling Da Vinci Resolve's workspace.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
 ## Todos
 
-* Add Storybook
 * Deploy package
 * Configure for extended Y coordinates
 * Add tests

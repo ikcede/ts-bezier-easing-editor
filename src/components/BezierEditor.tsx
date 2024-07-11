@@ -4,7 +4,7 @@ import { CubicBezier, Scale } from '../util';
 
 export type BezierChangeFunction = (bezier?: CubicBezier) => void;
 
-interface BezierEditorProps {
+export interface BezierEditorProps {
   /////////// Editor props ///////////
 
   /** Width of the editor in pixels */
