@@ -1,7 +1,6 @@
 import React from 'react';
 import { Grid, BezierCurve, Knob } from '.';
-import { Scale } from '../util';
-import CubicBezier from '../model/CubicBezier';
+import { CubicBezier, Scale } from '../util';
 
 export type BezierChangeFunction = (bezier?: CubicBezier) => void;
 

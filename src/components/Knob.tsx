@@ -1,7 +1,6 @@
 import React from 'react';
 import ScaledComponent from './ScaledComponent';
-import { Scale } from '../util';
-import CubicBezier from '../model/CubicBezier';
+import { CubicBezier, Scale } from '../util';
 
 interface KnobProps extends ScaledComponent {
   /** The bezier that this knob supports */

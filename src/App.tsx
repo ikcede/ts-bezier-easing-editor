@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import BezierEditor from './components/BezierEditor';
-import CubicBezier from './model/CubicBezier';
+import { CubicBezier } from './util';
 
 function App() {
   const [bezier, setBezier] = 
