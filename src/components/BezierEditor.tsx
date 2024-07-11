@@ -23,7 +23,7 @@ export interface BezierEditorProps {
   initialBezier?: CubicBezier,
 
   /** Change event emitted on bezier updates */
-  onBezierChange?: BezierChangeFunction,
+  onChange?: BezierChangeFunction,
 
   /////////// Grid props ///////////
 
@@ -102,7 +102,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   padding = 16,
   readOnly = false,
   initialBezier = new CubicBezier(0.25, 0.25, 0.75, 0.75),
-  onBezierChange = () => {},
+  onChange = () => {},
 
   /////////// Grid default props ///////////
   cols = 4,
@@ -219,7 +219,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
           );
         }
         setBezier(newBezier!);
-        onBezierChange(newBezier!);
+        onChange(newBezier!);
   
       } else if (downKnob1 || downKnob2) {
         setDownKnob1(false);
@@ -239,7 +239,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       calculatePosition,
       xScale,
       yScale,
-      onBezierChange
+      onChange
   ]);
 
   const sharedKnobProps = {

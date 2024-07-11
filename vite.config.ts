@@ -12,9 +12,6 @@ export default defineConfig({
   root: "./example",
   publicDir: "./public",
   build: {
-    outDir: "./dev",
-    rollupOptions: {
-      input: './index.html',
-    },
+    outDir: "./build",
   },
 })

@@ -1,6 +1,7 @@
 import { Meta, StoryObj } from "@storybook/react"
 
-import { BezierEditor } from "../components"
+import { BezierEditor, CubicBezier } from "../components"
+import { fn } from '@storybook/test';
 
 const meta = {
   title: "Components/BezierEditor",
@@ -15,15 +16,19 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-// Save this for now
-/*
-const defaultArgs = {
-  children: (
-    <>
-    </>
-  )
-}; */
-
-export const Primary: Story = {
+export const Default: Story = {
   args: {},
+};
+
+export const Readonly: Story = {
+  args: {
+    initialBezier: new CubicBezier(0, 1, 1, 0),
+    readOnly: true
+  },
+};
+
+export const WithAction: Story = {
+  args: {
+    onChange: fn()
+  },
 };

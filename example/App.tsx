@@ -23,7 +23,7 @@ function App() {
       <div className='component-wrapper'>
         <BezierEditor 
             initialBezier={bezier}
-            onBezierChange={onBezierChange}></BezierEditor>
+            onChange={onBezierChange}></BezierEditor>
       </div>
       <div>
         {renderBezier()}
