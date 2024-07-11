@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import BezierEditor from './components/BezierEditor';
-import { CubicBezier } from './model/cubic-bezier';
+import CubicBezier from './model/CubicBezier';
 
 function App() {
   const [bezier, setBezier] = 
-      useState(new CubicBezier(0.25, 0.25, 0.75, 0.75));
+      React.useState(new CubicBezier(0.25, 0.25, 0.75, 0.75));
 
   const onBezierChange = (newBezier?: CubicBezier) => {
     setBezier(newBezier ?? bezier);

@@ -1,5 +1,5 @@
 /// Store cubic bezier data
-export class CubicBezier {
+export default class CubicBezier {
   x1!: number;
   y1!: number;
   x2!: number;
