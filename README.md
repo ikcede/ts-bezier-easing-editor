@@ -9,6 +9,7 @@ function with default styles resembling Da Vinci Resolve's workspace.
 * Configure for extended Y coordinates
 * Add tests
 * Support touch events
+* Add cursor styling for knobs
 
 ## Available Scripts
 
@@ -18,6 +19,8 @@ In the project directory, you can run:
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+
+**Note**: This runs the App files in example/ as the dev environment.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
