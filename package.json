@@ -1,6 +1,9 @@
 {
   "name": "ts-bezier-easing-editor",
   "version": "0.1.0",
+  "repository": "git@github.com:ikcede/ts-bezier-easing-editor.git",
+  "author": "ikcede <https://github.com/ikcede>",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@types/jest": "^29.5.12",
