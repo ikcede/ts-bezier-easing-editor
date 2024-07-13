@@ -5,6 +5,13 @@
   "author": "ikcede <https://github.com/ikcede>",
   "license": "MIT",
   "private": true,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "main": "dist/main.js",
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@types/jest": "^29.5.12",
     "@types/node": "^20.14.10",
@@ -32,7 +39,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build",
+    "build": "tsc && vite build --emptyOutDir",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
