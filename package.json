@@ -1,5 +1,5 @@
 {
-  "name": "ts-bezier-easing-editor",
+  "name": "@ikcede/ts-bezier-easing-editor",
   "version": "0.1.0",
   "repository": {
     "type": "git",
