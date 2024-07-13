@@ -39,7 +39,7 @@
   },
   "scripts": {
     "start": "vite",
-    "build": "tsc && vite build --emptyOutDir",
+    "build": "tsc && vite build",
     "test": "jest",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
