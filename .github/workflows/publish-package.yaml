@@ -3,7 +3,7 @@ name: Publish on Github Packages
 on:
   push:
     branches:
-      - master
+      - 'main'
 
 jobs:
   publish-gpr:
