@@ -1,10 +1,13 @@
 {
   "name": "ts-bezier-easing-editor",
   "version": "0.1.0",
-  "repository": "git@github.com:ikcede/ts-bezier-easing-editor.git",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ikcede/ts-bezier-easing-editor.git"
+  },
   "author": "ikcede <https://github.com/ikcede>",
   "license": "MIT",
-  "private": true,
+  "private": false,
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
   },
