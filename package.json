@@ -9,7 +9,7 @@
   "license": "MIT",
   "private": false,
   "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
+    "registry": "https://npm.pkg.github.com/ikcede"
   },
   "main": "dist/main.js",
   "files": [
