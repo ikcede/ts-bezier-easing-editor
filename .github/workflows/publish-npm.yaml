@@ -1,9 +1,16 @@
+# Use this file if you choose to publish on NPM
+#
+# You will also need to set an automation token for NPM
+
 name: Publish on NPM
 
 on:
   push:
-    branches:
-      - main
+     branches:
+       - 'main'
+# on:
+#   release:
+#     types: [published]
 
 jobs:
   publish:
@@ -12,6 +19,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # This adds authentication for the NPM registry
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -19,8 +27,10 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - run: npm install
+      - run: npm run test
+      - run: npm run build
 
-      - name: Publish to npm
+      - name: Publish to NPM
         run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
