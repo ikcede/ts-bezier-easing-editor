@@ -1,6 +1,5 @@
 import React from 'react';
-import ScaledComponent from './ScaledComponent';
-import { CubicBezier, Scale } from '../util';
+import { CubicBezier, Scale, ScaledComponent } from '../util';
 
 interface BezierCurveProps extends ScaledComponent {
   /** Stroke color of the curve */

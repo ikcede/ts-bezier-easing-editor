@@ -1,6 +1,5 @@
 import React from 'react';
-import ScaledComponent from './ScaledComponent';
-import { CubicBezier, Scale } from '../util';
+import { CubicBezier, Scale, ScaledComponent } from '../util';
 
 interface KnobProps extends ScaledComponent {
   /** The bezier that this knob supports */
@@ -114,7 +113,7 @@ const Knob: React.FC<KnobProps> = ({
     <g>
       <line
         stroke={(hover || down) ? activeTailColor : tailColor}
-        stroke-linecap="round"
+        strokeLinecap="round"
         strokeWidth={(hover || down) ? activeTailWidth : tailWidth}
         x1={tailX}
         y1={tailY}
