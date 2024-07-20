@@ -1,16 +1,8 @@
-# Use this file if you choose to publish on NPM
-#
-# You will also need to set an automation token for NPM
-
 name: Publish on NPM
 
 on:
-  push:
-     branches:
-       - 'main'
-# on:
-#   release:
-#     types: [published]
+  release:
+    types: [published]
 
 jobs:
   publish:
