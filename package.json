@@ -1,6 +1,7 @@
 {
   "name": "ts-bezier-easing-editor",
-  "version": "0.1.0",
+  "description": "A Typescript implementation of a visual bezier editor React component for the CSS easing function.",
+  "version": "0.1.1",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/ikcede/ts-bezier-easing-editor.git"
@@ -12,6 +13,13 @@
   "types": "dist/main.d.ts",
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "typescript",
+    "react",
+    "bezier",
+    "css easing",
+    "css animation"
   ],
   "scripts": {
     "start": "vite",
