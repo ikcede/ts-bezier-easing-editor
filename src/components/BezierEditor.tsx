@@ -134,6 +134,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 }) => {
   const [downKnob1, setDownKnob1] = React.useState(false);
   const [downKnob2, setDownKnob2] = React.useState(false);
+  const [allowScroll, setAllowScroll] = React.useState(true);
   const [bezier, setBezier] = React.useState(initialBezier);
 
   const svgRef = React.createRef<SVGSVGElement>();
@@ -155,11 +156,13 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 
   const handleDownKnob1 = React.useCallback(() => {
     setDownKnob1(true);
-  }, [setDownKnob1]);
+    setAllowScroll(false);
+  }, []);
 
   const handleDownKnob2 = React.useCallback(() => {
     setDownKnob2(true);
-  }, [setDownKnob2]);
+    setAllowScroll(false);
+  }, []);
 
   // Calculate the x and y values of the mouse position
   // constrained to the SVG
@@ -198,6 +201,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 
       // Check if primary button is pressed for MouseEvents
       if (event instanceof MouseEvent && event.buttons === 1) {
+        event.preventDefault();
         isValidMove = true;
         xVal = event.clientX;
         yVal = event.clientY;
@@ -210,7 +214,6 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 
       if (isValidMove && (downKnob1 || downKnob2)
           && svgRef.current !== null) {
-        event.preventDefault();
         const position = calculatePosition(xVal, yVal);
 
         let newBezier: CubicBezier;
@@ -235,6 +238,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       } else if (downKnob1 || downKnob2) {
         setDownKnob1(false);
         setDownKnob2(false);
+        setAllowScroll(true);
       }
     };
 
@@ -242,10 +246,11 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     const handleTouchEnd = (event: TouchEvent) => {
       setDownKnob1(false);
       setDownKnob2(false);
+      setAllowScroll(true);
     };
 
     window.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchmove', handleMove, {passive: false});
+    window.addEventListener('touchmove', handleMove);
     window.addEventListener('touchend', handleTouchEnd);
     window.addEventListener('touchcancel', handleTouchEnd);
     return () => {
@@ -289,7 +294,8 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   return (
     <svg width={width}
          height={height}
-         ref={svgRef}>
+         ref={svgRef}
+         style={{touchAction: allowScroll ? undefined : 'none'}} >
       <Grid
         x={x}
         y={y}

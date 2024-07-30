@@ -112,22 +112,22 @@ const Knob: React.FC<KnobProps> = ({
     setHover(false);
   }
 
-  const handleMouseDown = (event: React.MouseEvent) => {
+  const handleMouseDown = (event: React.UIEvent) => {
     event.preventDefault();
     onDown();
   }
 
+  /*
   // Manually set up the event listener to prevent scrolling
   React.useEffect(() => {
     const handleTouchStart = (event: TouchEvent) => {
       event.preventDefault();
-      event.stopPropagation();
       onDown();
     }
 
     knobRef.current!.addEventListener(
         'touchstart', handleTouchStart, {passive: false});
-  }, [knobRef, onDown]);
+  }, [knobRef, onDown]); */
 
   return (
     <g>
@@ -159,6 +159,7 @@ const Knob: React.FC<KnobProps> = ({
         onMouseDown={handleMouseDown} 
         onMouseEnter={useHover ? handleMouseEnter : undefined}
         onMouseLeave={useHover ? handleMouseLeave : undefined}
+        onTouchStart={handleMouseDown}
         />
       
       {down &&
