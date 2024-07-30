@@ -40,7 +40,7 @@ Check out [example/App.tsx](https://github.com/ikcede/ts-bezier-easing-editor/bl
 
 * Configure for extended Y coordinates
 * Improve test coverage
-* Add cursor styling for knobs
+* Fix position calculation with CSS zoom applied
 
 ## Local Development
 

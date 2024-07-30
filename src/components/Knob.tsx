@@ -154,6 +154,7 @@ const Knob: React.FC<KnobProps> = ({
         r={(hover || down) ? activeKnobRadius : knobRadius}
         stroke='none'
         fill={(hover || down) ? activeKnobColor : knobColor}
+        style={{cursor: (hover || down) ? 'grab' : undefined}}
         ref={knobRef}
         onMouseDown={handleMouseDown} 
         onMouseEnter={useHover ? handleMouseEnter : undefined}
@@ -166,7 +167,8 @@ const Knob: React.FC<KnobProps> = ({
           cy={knobY}
           r={Math.max(activeKnobRadius - 5, 1)}
           stroke='none'
-          fill={knobHighlightColor} />
+          fill={knobHighlightColor}
+          style={{cursor: 'grab'}} />
       }
     </g>
   );
