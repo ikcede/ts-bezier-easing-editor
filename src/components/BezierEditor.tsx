@@ -155,11 +155,11 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 
   const handleDownKnob1 = React.useCallback(() => {
     setDownKnob1(true);
-  }, []);
+  }, [setDownKnob1]);
 
   const handleDownKnob2 = React.useCallback(() => {
     setDownKnob2(true);
-  }, []);
+  }, [setDownKnob2]);
 
   // Calculate the x and y values of the mouse position
   // constrained to the SVG
@@ -204,12 +204,13 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       } else if (event instanceof TouchEvent) {
         isValidMove = true;
         let touch = event.touches[0] || event.changedTouches[0];
-        xVal = touch.pageX;
-        yVal = touch.pageY;
+        xVal = touch.clientX;
+        yVal = touch.clientY;
       }
 
       if (isValidMove && (downKnob1 || downKnob2)
           && svgRef.current !== null) {
+        event.preventDefault();
         const position = calculatePosition(xVal, yVal);
 
         let newBezier: CubicBezier;
@@ -244,7 +245,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     };
 
     window.addEventListener('mousemove', handleMove);
-    window.addEventListener('touchmove', handleMove);
+    window.addEventListener('touchmove', handleMove, {passive: false});
     window.addEventListener('touchend', handleTouchEnd);
     window.addEventListener('touchcancel', handleTouchEnd);
     return () => {
