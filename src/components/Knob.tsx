@@ -121,6 +121,7 @@ const Knob: React.FC<KnobProps> = ({
   React.useEffect(() => {
     const handleTouchStart = (event: TouchEvent) => {
       event.preventDefault();
+      event.stopPropagation();
       onDown();
     }
 
