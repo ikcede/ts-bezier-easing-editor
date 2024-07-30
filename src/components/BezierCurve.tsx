@@ -48,7 +48,7 @@ const BezierCurve: React.FC<BezierCurveProps> = ({
   return (
     <path
       fill="none"
-      stroke-linecap="round"
+      strokeLinecap="round"
       stroke={color}
       strokeWidth={width}
       d={pathD} />

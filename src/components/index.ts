@@ -5,4 +5,8 @@ import Grid from './Grid';
 import Knob from './Knob';
 
 export { BezierCurve, BezierEditor, CubicBezier, Grid, Knob };
-export type { ScaledComponent, BezierEditorProps, BezierChangeFunction };
+export type { 
+  ScaledComponent,
+  BezierEditorProps,
+  BezierChangeFunction
+};

@@ -1,5 +1,6 @@
 # Typescript React Bezier Editor
 
+[![npm](https://img.shields.io/npm/v/ts-bezier-easing-editor?color=%231d5c11)](https://www.npmjs.com/package/ts-bezier-easing-editor)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ikcede/ts-bezier-easing-editor/blob/main/LICENSE)
 ![typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 
@@ -39,7 +40,6 @@ Check out [example/App.tsx](https://github.com/ikcede/ts-bezier-easing-editor/bl
 
 * Configure for extended Y coordinates
 * Improve test coverage
-* Support touch events
 * Add cursor styling for knobs
 
 ## Local Development

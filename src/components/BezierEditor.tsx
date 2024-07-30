@@ -153,28 +153,22 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     [y, gridHeight]
   );
 
-  const handleDownKnob1 = React.useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      setDownKnob1(true);
-    }, []
-  );
+  const handleDownKnob1 = React.useCallback(() => {
+    setDownKnob1(true);
+  }, []);
 
-  const handleDownKnob2 = React.useCallback(
-    (e: React.MouseEvent) => {
-      e.preventDefault();
-      setDownKnob2(true);
-    }, []
-  );
+  const handleDownKnob2 = React.useCallback(() => {
+    setDownKnob2(true);
+  }, []);
 
   // Calculate the x and y values of the mouse position
   // constrained to the SVG
   const calculatePosition = React.useCallback(
-    (e: MouseEvent) => {
+    (x: number, y: number) => {
       const rect = svgRef.current!.getBoundingClientRect();
 
-      let calcX = e.clientX - rect.left;
-      let calcY = e.clientY - rect.top;
+      let calcX = x - rect.left;
+      let calcY = y - rect.top;
 
       if (calcX < 0) {
         calcX = 0;
@@ -196,12 +190,28 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   // of the SVG doesn't stop the drag
   React.useEffect(() => {
 
-    const handleMouseMove = (event: MouseEvent) => {
-      // Check if primary button is pressed
-      if (event.buttons === 1 && (downKnob1 || downKnob2)
+    // Use one move handler for both mouse and touch events
+    const handleMove = (event: UIEvent) => {
+      let isValidMove = false;
+      let xVal = 0;
+      let yVal = 0;
+
+      // Check if primary button is pressed for MouseEvents
+      if (event instanceof MouseEvent && event.buttons === 1) {
+        isValidMove = true;
+        xVal = event.clientX;
+        yVal = event.clientY;
+      } else if (event instanceof TouchEvent) {
+        isValidMove = true;
+        let touch = event.touches[0] || event.changedTouches[0];
+        xVal = touch.pageX;
+        yVal = touch.pageY;
+      }
+
+      if (isValidMove && (downKnob1 || downKnob2)
           && svgRef.current !== null) {
-        const position = calculatePosition(event);
-  
+        const position = calculatePosition(xVal, yVal);
+
         let newBezier: CubicBezier;
         if (downKnob1) {
           newBezier = new CubicBezier(
@@ -218,18 +228,30 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
               yScale.inverse(position[1]),
           );
         }
+
         setBezier(newBezier!);
         onChange(newBezier!);
-  
       } else if (downKnob1 || downKnob2) {
         setDownKnob1(false);
         setDownKnob2(false);
       }
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
+    // Clear down when touch ends
+    const handleTouchEnd = (event: TouchEvent) => {
+      setDownKnob1(false);
+      setDownKnob2(false);
+    };
+
+    window.addEventListener('mousemove', handleMove);
+    window.addEventListener('touchmove', handleMove);
+    window.addEventListener('touchend', handleTouchEnd);
+    window.addEventListener('touchcancel', handleTouchEnd);
     return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mousemove', handleMove);
+      window.removeEventListener('touchmove', handleMove);
+      window.removeEventListener('touchend', handleTouchEnd);
+      window.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [
       downKnob1,
@@ -294,12 +316,12 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
             {...sharedKnobProps}
             control={1}
             down={downKnob1}
-            onMouseDown={handleDownKnob1}></Knob>
+            onDown={handleDownKnob1}></Knob>
           <Knob
             {...sharedKnobProps}
             control={2}
             down={downKnob2}
-            onMouseDown={handleDownKnob2}></Knob>
+            onDown={handleDownKnob2}></Knob>
         </>
       }
     </svg>

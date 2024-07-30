@@ -1,6 +1,8 @@
 import React from 'react';
 import { CubicBezier, Scale, ScaledComponent } from '../util';
 
+export type KnobDownFunction = () => void;
+
 interface KnobProps extends ScaledComponent {
   /** The bezier that this knob supports */
   bezier?: CubicBezier,
@@ -41,9 +43,9 @@ interface KnobProps extends ScaledComponent {
   down?: boolean,
 
   /**
-   * Event passed to be set on the knob to detect down events
+   * Notifies when a down event happens on the knob
    */
-  onMouseDown?: React.MouseEventHandler,
+  onDown?: KnobDownFunction,
 
   /** If the knob should apply hover effects */
   useHover?: boolean,
@@ -80,7 +82,7 @@ const Knob: React.FC<KnobProps> = ({
   tailKnobRadius = 8,
 
   down = false,
-  onMouseDown = () => {},
+  onDown = () => {},
 
   useHover = true,
   activeKnobColor = 'rgb(230, 75, 61)',
@@ -93,6 +95,7 @@ const Knob: React.FC<KnobProps> = ({
   yScale = new Scale(0, 1, 300, 0)
 }) => {
   const [hover, setHover] = React.useState(false);
+  const knobRef = React.createRef<SVGCircleElement>();
 
   const tailX = xScale.scale(control === 1 ? 0 : 1);
   const tailY = yScale.scale(control === 1 ? 0 : 1);
@@ -108,6 +111,22 @@ const Knob: React.FC<KnobProps> = ({
   const handleMouseLeave = (event: React.MouseEvent) => {
     setHover(false);
   }
+
+  const handleMouseDown = (event: React.MouseEvent) => {
+    event.preventDefault();
+    onDown();
+  }
+
+  // Manually set up the event listener to prevent scrolling
+  React.useEffect(() => {
+    const handleTouchStart = (event: TouchEvent) => {
+      event.preventDefault();
+      onDown();
+    }
+
+    knobRef.current!.addEventListener(
+        'touchstart', handleTouchStart, {passive: false});
+  }, [knobRef, onDown]);
 
   return (
     <g>
@@ -135,7 +154,8 @@ const Knob: React.FC<KnobProps> = ({
         r={(hover || down) ? activeKnobRadius : knobRadius}
         stroke='none'
         fill={(hover || down) ? activeKnobColor : knobColor}
-        onMouseDown={onMouseDown} 
+        ref={knobRef}
+        onMouseDown={handleMouseDown} 
         onMouseEnter={useHover ? handleMouseEnter : undefined}
         onMouseLeave={useHover ? handleMouseLeave : undefined}
         />
