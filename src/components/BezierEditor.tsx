@@ -22,6 +22,9 @@ export interface BezierEditorProps {
   /** CubicBezier for the editor to visualize */
   initialBezier?: CubicBezier,
 
+  /** Controlled bezier value */
+  bezier?: CubicBezier,
+
   /** Change event emitted on bezier updates */
   onChange?: BezierChangeFunction,
 
@@ -102,6 +105,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   padding = 16,
   readOnly = false,
   initialBezier = new CubicBezier(0.25, 0.25, 0.75, 0.75),
+  bezier,
   onChange = () => {},
 
   /////////// Grid default props ///////////
@@ -134,7 +138,8 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 }) => {
   const [downKnob1, setDownKnob1] = React.useState(false);
   const [downKnob2, setDownKnob2] = React.useState(false);
-  const [bezier, setBezier] = React.useState(initialBezier);
+  const [bezierValue, setBezierValue] = 
+      React.useState(bezier || initialBezier);
 
   const svgRef = React.createRef<SVGSVGElement>();
 
@@ -186,6 +191,12 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     }, [svgRef, height, width]
   );
 
+  React.useEffect(() => {
+    if (bezier !== undefined) {
+      setBezierValue(bezier);
+    }
+  }, [bezier]);
+
   // Set up a window listener so that moving the mouse out
   // of the SVG doesn't stop the drag
   React.useEffect(() => {
@@ -218,19 +229,19 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
           newBezier = new CubicBezier(
               xScale.inverse(position[0]),
               yScale.inverse(position[1]),
-              bezier.x2,
-              bezier.y2,
+              bezierValue.x2,
+              bezierValue.y2,
           );
         } else {
           newBezier = new CubicBezier(
-              bezier.x1,
-              bezier.y1,
+              bezierValue.x1,
+              bezierValue.y1,
               xScale.inverse(position[0]),
               yScale.inverse(position[1]),
           );
         }
 
-        setBezier(newBezier!);
+        setBezierValue(newBezier!);
         onChange(newBezier!);
       } else if (downKnob1 || downKnob2) {
         setDownKnob1(false);
@@ -258,7 +269,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       downKnob1,
       downKnob2,
       svgRef,
-      bezier,
+      bezierValue,
       calculatePosition,
       xScale,
       yScale,
@@ -266,7 +277,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   ]);
 
   const sharedKnobProps = {
-    bezier: bezier,
+    bezier: bezierValue,
     xScale: xScale,
     yScale: yScale,
 
@@ -304,7 +315,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       ></Grid>
 
       <BezierCurve
-        bezier={bezier}
+        bezier={bezierValue}
         xScale={xScale}
         yScale={yScale}
         color={curveColor}

@@ -28,4 +28,9 @@ export default class CubicBezier {
     return Math.abs(this.x1 - this.x2) < error
         && Math.abs(this.y1 - this.y2) < error;
   }
+
+  /// Converts CubicBezier into an array
+  toArray(): [number, number, number, number] {
+    return [this.x1, this.y1, this.x2, this.y2];
+  }
 }
