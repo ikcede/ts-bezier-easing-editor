@@ -276,6 +276,19 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       onChange
   ]);
 
+  /// Disables touch scrolling on the editor for better UX
+  React.useEffect(() => {
+    const handleTouchStart = (event: TouchEvent) => {
+      event.preventDefault();
+    };
+
+    svgRef.current?.addEventListener(
+      'touchstart',
+      handleTouchStart,
+      {passive: false}
+    );
+  }, [svgRef.current]);
+
   const sharedKnobProps = {
     bezier: bezierValue,
     xScale: xScale,
