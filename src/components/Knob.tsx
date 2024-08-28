@@ -95,14 +95,15 @@ const Knob: React.FC<KnobProps> = ({
   yScale = new Scale(0, 1, 300, 0)
 }) => {
   const [hover, setHover] = React.useState(false);
+  const [knobX, setKnobX] = React.useState(
+    xScale.scale(control === 1 ? bezier.x1 : bezier.x2));
+  const [knobY, setKnobY] = React.useState(
+    yScale.scale(control === 1 ? bezier.y1 : bezier.y2));
+
   const knobRef = React.createRef<SVGCircleElement>();
 
   const tailX = xScale.scale(control === 1 ? 0 : 1);
   const tailY = yScale.scale(control === 1 ? 0 : 1);
-  const knobX = xScale.scale(
-      control === 1 ? bezier.x1 : bezier.x2);
-  const knobY = yScale.scale(
-      control === 1 ? bezier.y1 : bezier.y2);
 
   const handleMouseEnter = (event: React.MouseEvent) => {
     setHover(true);
@@ -116,6 +117,12 @@ const Knob: React.FC<KnobProps> = ({
     event.preventDefault();
     onDown();
   }
+
+  // Ensure x/y values update on bezier change
+  React.useEffect(() => {
+    setKnobX(xScale.scale(control === 1 ? bezier.x1 : bezier.x2));
+    setKnobY(yScale.scale(control === 1 ? bezier.y1 : bezier.y2));
+  }, [bezier, control, xScale, yScale]);
 
   // Manually set up the event listener to prevent scrolling
   React.useEffect(() => {
