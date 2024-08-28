@@ -244,8 +244,10 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
         setBezierValue(newBezier!);
         onChange(newBezier!);
       } else if (downKnob1 || downKnob2) {
-        setDownKnob1(false);
-        setDownKnob2(false);
+        if (svgRef.current !== null) {
+          setDownKnob1(false);
+          setDownKnob2(false);
+        }
       }
     };
 
