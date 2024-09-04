@@ -1,8 +1,6 @@
 # Typescript React Bezier Editor
 
-[![npm](https://img.shields.io/npm/v/ts-bezier-easing-editor?color=%231d5c11)](https://www.npmjs.com/package/ts-bezier-easing-editor)
-[![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ikcede/ts-bezier-easing-editor/blob/main/LICENSE)
-![typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
+[![npm](https://img.shields.io/npm/v/ts-bezier-easing-editor?color=%231d5c11)](https://www.npmjs.com/package/ts-bezier-easing-editor) [![license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/ikcede/ts-bezier-easing-editor/blob/main/LICENSE) ![typescript](https://badgen.net/badge/icon/typescript?icon=typescript&label)
 
 A Typescript implementation of a bezier editor React component for the CSS easing function. Click and drag the knobs to visually modify your beziers!
 
@@ -38,9 +36,9 @@ Check out [example/App.tsx](https://github.com/ikcede/ts-bezier-easing-editor/bl
 
 ## Work in Progress
 
-* Configure for extended Y coordinates
-* Improve test coverage
-* Fix position calculation with CSS zoom applied
+- Configure for extended Y coordinates
+- Improve test coverage
+- Fix position calculation with CSS zoom applied
 
 ## Local Development
 
@@ -48,13 +46,11 @@ If you wish to fork the repo, after installing the deps, you can run these scrip
 
 ### `npm start`
 
-Runs the app in the development mode.
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in the development mode. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 **Note**: This runs the App files in example/ as the dev environment.
 
-The page will reload if you make edits.
-You will also see any lint errors in the console.
+The page will reload if you make edits. You will also see any lint errors in the console.
 
 ### `npm test`
 
@@ -71,4 +67,3 @@ Starts up a Storybook server on [http://localhost:6006](http://localhost:6006)
 ### `npm run build-storybook`
 
 Builds a static web app version of Storybook to `/storybook-static`
-
