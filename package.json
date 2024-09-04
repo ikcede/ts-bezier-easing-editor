@@ -1,7 +1,7 @@
 {
   "name": "ts-bezier-easing-editor",
   "description": "A Typescript implementation of a visual bezier editor React component for the CSS easing function.",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/ikcede/ts-bezier-easing-editor.git"
@@ -24,7 +24,8 @@
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build --config vite-build.config.mts",
-    "test": "jest",
+    "test": "jest --watch",
+    "format": "prettier --write .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -53,6 +54,7 @@
     "@storybook/react-vite": "^8.2.1",
     "@storybook/test": "^8.2.1",
     "eslint-plugin-storybook": "^0.8.0",
+    "prettier": "3.3.3",
     "storybook": "^8.2.1",
     "vite-plugin-dts": "^4.0.0-beta.1",
     "vite-tsconfig-paths": "^5.0.1"

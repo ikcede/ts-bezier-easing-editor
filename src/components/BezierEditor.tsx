@@ -8,94 +8,94 @@ export interface BezierEditorProps {
   /////////// Editor props ///////////
 
   /** Width of the editor in pixels */
-  width?: number,
+  width?: number;
 
   /** Height of the editor in pixels */
-  height?: number,
+  height?: number;
 
   /** Uniform padding of the editor in pixels */
-  padding?: number,
+  padding?: number;
 
   /** If the editor is readonly (hides knobs) */
-  readOnly?: boolean,
+  readOnly?: boolean;
 
   /** CubicBezier for the editor to visualize */
-  initialBezier?: CubicBezier,
+  initialBezier?: CubicBezier;
 
   /** Controlled bezier value */
-  bezier?: CubicBezier,
+  bezier?: CubicBezier;
 
   /** Change event emitted on bezier updates */
-  onChange?: BezierChangeFunction,
+  onChange?: BezierChangeFunction;
 
   /////////// Grid props ///////////
 
   /** Number of columns (col gridlines = cols - 1) */
-  cols?: number,
+  cols?: number;
 
   /** Number of rows (row gridlines = rows - 1) */
-  rows?: number,
+  rows?: number;
 
   /** Color of the background fill */
-  gridBackgroundColor?: string,
+  gridBackgroundColor?: string;
 
   /** Color of the gridlines and borders */
-  gridlineColor?: string,
+  gridlineColor?: string;
 
   /** Show or hide the gridlines */
-  showGridlines?: boolean,
+  showGridlines?: boolean;
 
   /** Show or hide additional half gridlines */
-  showHalflines?: boolean,
+  showHalflines?: boolean;
 
   /////////// Knob props ///////////
 
   /** Default color of the knob */
-  knobColor?: string,
+  knobColor?: string;
 
   /** Default radius of the knob */
-  knobRadius?: number,
+  knobRadius?: number;
 
   /** Color of the circle within the knob that appears on down */
-  knobHighlightColor?: string,
+  knobHighlightColor?: string;
 
   /** Default color of the line */
-  tailColor?: string,
+  tailColor?: string;
 
   /** Default stroke with of the line */
-  tailWidth?: number,
+  tailWidth?: number;
 
   /** Whether or not to add an extra knob at the base */
-  showTailKnob?: boolean,
+  showTailKnob?: boolean;
 
   /** Color of the extra knob */
-  tailKnobColor?: string,
+  tailKnobColor?: string;
 
   /** Radius of the extra knob */
-  tailKnobRadius?: number,
+  tailKnobRadius?: number;
 
   /** If the knob should apply hover effects */
-  useHover?: boolean,
+  useHover?: boolean;
 
   /** Color of the knob when hovered or down */
-  activeKnobColor?: string,
+  activeKnobColor?: string;
 
   /** Radius of the knob when hovered or down */
-  activeKnobRadius?: number,
+  activeKnobRadius?: number;
 
   /** Color of the line when hovered or down */
-  activeTailColor?: string,
+  activeTailColor?: string;
 
   /** Width of the line when hovered or down */
-  activeTailWidth?: number,
+  activeTailWidth?: number;
 
   /////////// Curve props ///////////
-  
+
   /** Stroke color of the curve */
-  curveColor?: string,
+  curveColor?: string;
 
   /** Stroke width in pixels */
-  curveWidth?: number,
+  curveWidth?: number;
 }
 
 const BezierEditor: React.FC<BezierEditorProps> = ({
@@ -138,8 +138,9 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
 }) => {
   const [downKnob1, setDownKnob1] = React.useState(false);
   const [downKnob2, setDownKnob2] = React.useState(false);
-  const [bezierValue, setBezierValue] = 
-      React.useState(bezier || initialBezier);
+  const [bezierValue, setBezierValue] = React.useState(
+    bezier || initialBezier
+  );
 
   const svgRef = React.createRef<SVGSVGElement>();
 
@@ -188,7 +189,8 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       }
 
       return [calcX, calcY];
-    }, [svgRef, height, width]
+    },
+    [svgRef, height, width]
   );
 
   React.useEffect(() => {
@@ -200,7 +202,6 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   // Set up a window listener so that moving the mouse out
   // of the SVG doesn't stop the drag
   React.useEffect(() => {
-
     // Use one move handler for both mouse and touch events
     const handleMove = (event: UIEvent) => {
       let isValidMove = false;
@@ -220,24 +221,27 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
         yVal = touch.clientY;
       }
 
-      if (isValidMove && (downKnob1 || downKnob2)
-          && svgRef.current !== null) {
+      if (
+        isValidMove &&
+        (downKnob1 || downKnob2) &&
+        svgRef.current !== null
+      ) {
         const position = calculatePosition(xVal, yVal);
 
         let newBezier: CubicBezier;
         if (downKnob1) {
           newBezier = new CubicBezier(
-              xScale.inverse(position[0]),
-              yScale.inverse(position[1]),
-              bezierValue.x2,
-              bezierValue.y2,
+            xScale.inverse(position[0]),
+            yScale.inverse(position[1]),
+            bezierValue.x2,
+            bezierValue.y2
           );
         } else {
           newBezier = new CubicBezier(
-              bezierValue.x1,
-              bezierValue.y1,
-              xScale.inverse(position[0]),
-              yScale.inverse(position[1]),
+            bezierValue.x1,
+            bezierValue.y1,
+            xScale.inverse(position[0]),
+            yScale.inverse(position[1])
           );
         }
 
@@ -268,14 +272,14 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       window.removeEventListener('touchcancel', handleTouchEnd);
     };
   }, [
-      downKnob1,
-      downKnob2,
-      svgRef,
-      bezierValue,
-      calculatePosition,
-      xScale,
-      yScale,
-      onChange
+    downKnob1,
+    downKnob2,
+    svgRef,
+    bezierValue,
+    calculatePosition,
+    xScale,
+    yScale,
+    onChange,
   ]);
 
   /// Disables touch scrolling on the editor for better UX
@@ -284,11 +288,9 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       event.preventDefault();
     };
 
-    svgRef.current?.addEventListener(
-      'touchstart',
-      handleTouchStart,
-      {passive: false}
-    );
+    svgRef.current?.addEventListener('touchstart', handleTouchStart, {
+      passive: false,
+    });
   }, [svgRef.current]);
 
   const sharedKnobProps = {
@@ -313,9 +315,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   };
 
   return (
-    <svg width={width}
-         height={height}
-         ref={svgRef} >
+    <svg width={width} height={height} ref={svgRef}>
       <Grid
         x={x}
         y={y}
@@ -336,21 +336,23 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
         color={curveColor}
         width={curveWidth}
       ></BezierCurve>
-      
-      {!readOnly &&
+
+      {!readOnly && (
         <>
           <Knob
             {...sharedKnobProps}
             control={1}
             down={downKnob1}
-            onDown={handleDownKnob1}></Knob>
+            onDown={handleDownKnob1}
+          ></Knob>
           <Knob
             {...sharedKnobProps}
             control={2}
             down={downKnob2}
-            onDown={handleDownKnob2}></Knob>
+            onDown={handleDownKnob2}
+          ></Knob>
         </>
-      }
+      )}
     </svg>
   );
 };

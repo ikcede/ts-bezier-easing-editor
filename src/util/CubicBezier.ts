@@ -31,14 +31,20 @@ export default class CubicBezier {
 
   /// Equality checker
   equals(other: CubicBezier): boolean {
-    return this.x1 === other.x1 && this.y1 === other.y1
-        && this.x2 === other.x2 && this.y2 === other.y2;
+    return (
+      this.x1 === other.x1 &&
+      this.y1 === other.y1 &&
+      this.x2 === other.x2 &&
+      this.y2 === other.y2
+    );
   }
 
   /// Checks if the bezier is close enough to linear
   isLinear(error: number = 0.01): boolean {
-    return Math.abs(this.x1 - this.x2) < error
-        && Math.abs(this.y1 - this.y2) < error;
+    return (
+      Math.abs(this.x1 - this.x2) < error &&
+      Math.abs(this.y1 - this.y2) < error
+    );
   }
 
   /// Converts CubicBezier into an array
@@ -52,7 +58,7 @@ export default class CubicBezier {
       this.x1.toString(),
       this.y1.toString(),
       this.x2.toString(),
-      this.y2.toString()
+      this.y2.toString(),
     ];
   }
 }

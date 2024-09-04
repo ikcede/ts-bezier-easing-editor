@@ -1,6 +1,6 @@
 import { range } from '../';
 
-describe("range", () => {
+describe('range', () => {
   it('produces a range', () => {
     expect(range(0, 5, 1)).toEqual([0, 1, 2, 3, 4]);
   });

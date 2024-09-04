@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-import viteTsconfigPaths from 'vite-tsconfig-paths'
-import dts from 'vite-plugin-dts'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import viteTsconfigPaths from 'vite-tsconfig-paths';
+import dts from 'vite-plugin-dts';
 
 export default defineConfig({
   base: '',
@@ -10,13 +10,10 @@ export default defineConfig({
     react(),
     viteTsconfigPaths(),
     dts({
-      exclude: [
-        '**/stories',
-        '**/test',
-      ],
+      exclude: ['**/stories', '**/test'],
       insertTypesEntry: true,
       rollupTypes: true,
-    })
+    }),
   ],
   build: {
     copyPublicDir: false,
@@ -30,7 +27,7 @@ export default defineConfig({
       output: {
         assetFileNames: 'assets/[name][extname]',
         entryFileNames: 'main.js',
-      }
-    }
+      },
+    },
   },
-})
+});

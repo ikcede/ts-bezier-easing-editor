@@ -1,10 +1,10 @@
-import { Meta, StoryObj } from "@storybook/react"
+import { Meta, StoryObj } from '@storybook/react';
 
-import { BezierEditor, CubicBezier } from "../components"
+import { BezierEditor, CubicBezier } from '../components';
 import { fn } from '@storybook/test';
 
 const meta = {
-  title: "Components/BezierEditor",
+  title: 'Components/BezierEditor',
   component: BezierEditor,
   parameters: {
     layout: 'centered',
@@ -23,12 +23,12 @@ export const Default: Story = {
 export const Readonly: Story = {
   args: {
     initialBezier: new CubicBezier(0, 1, 1, 0),
-    readOnly: true
+    readOnly: true,
   },
 };
 
 export const WithAction: Story = {
   args: {
-    onChange: fn()
+    onChange: fn(),
   },
 };

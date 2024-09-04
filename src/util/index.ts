@@ -3,12 +3,6 @@ import range from './range';
 import Scale from './Scale';
 import ScaledComponent from './ScaledComponent';
 
-export {
-  CubicBezier,
-  range,
-  Scale,
-};
+export { CubicBezier, range, Scale };
 
-export type {
-  ScaledComponent,
-};
+export type { ScaledComponent };
