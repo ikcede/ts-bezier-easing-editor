@@ -4,41 +4,41 @@ import { CubicBezier, Scale, ScaledComponent } from '../util';
 export type KnobDownFunction = () => void;
 
 interface KnobProps extends ScaledComponent {
-  /** The bezier that this knob supports */
+  /** CubicBezier controlling the underlying curve data */
   bezier?: CubicBezier;
 
-  /** Which beizer point the knob is based on */
+  /** Which control point to represent (1 or 2) */
   control?: 1 | 2;
 
-  /** Default color of the knob */
+  /** Color of the main knob */
   knobColor?: string;
 
-  /** Default radius of the knob */
+  /** Radius of the main knob */
   knobRadius?: number;
 
   /** Color of the circle within the knob that appears on down */
   knobHighlightColor?: string;
 
-  /** Default color of the line */
+  /** Color of the tail line */
   tailColor?: string;
 
-  /** Default stroke with of the line */
+  /** Width of the tail line in pixels */
   tailWidth?: number;
 
   /** Whether or not to add an extra knob at the base */
   showTailKnob?: boolean;
 
-  /** Color of the extra knob */
+  /** Color of the tail knob */
   tailKnobColor?: string;
 
-  /** Radius of the extra knob */
+  /** Radius of the tail knob */
   tailKnobRadius?: number;
 
   /**
    * If the knob is pressed down or not
    *
-   * This is passed from editor to control how the knob is
-   * being dragged
+   * This is passed from [BezierEditor] to control how
+   * the knob is being dragged
    */
   down?: boolean;
 
@@ -47,7 +47,7 @@ interface KnobProps extends ScaledComponent {
    */
   onDown?: KnobDownFunction;
 
-  /** If the knob should apply hover effects */
+  /** Whether the knob should apply hover effects */
   useHover?: boolean;
 
   /** Color of the knob when hovered or down */
@@ -66,8 +66,22 @@ interface KnobProps extends ScaledComponent {
 /**
  * A knob used to visualize and control one the two bezier points
  *
- * The tail point starts at either (0, 0) for control = 1 or
- * (1, 1) for control = 2
+ * It represents one of the two control points of a cubic Bezier
+ * curve and allows for user interaction. The component includes
+ * the main knob, a tail line, and optionally a tail knob.
+ *
+ * The tail point always starts at either (0, 0) for control = 1
+ * or (1, 1) for control = 2
+ *
+ * @component
+ * @example
+ * ```jsx
+ * <Knob
+ *   bezier={new CubicBezier(0.4, 0, 0.6, 1)}
+ *   control={1}
+ *   onDown={() => console.log('Knob pressed')}
+ * />
+ * ```
  */
 const Knob: React.FC<KnobProps> = ({
   bezier = new CubicBezier(0.25, 0.25, 0.75, 0.75),

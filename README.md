@@ -39,6 +39,8 @@ Check out [example/App.tsx](https://github.com/ikcede/ts-bezier-easing-editor/bl
 - Configure for extended Y coordinates
 - Improve test coverage
 - Fix position calculation with CSS zoom applied
+- Support auto resize
+- Support linear() and step() views
 
 ## Local Development
 
