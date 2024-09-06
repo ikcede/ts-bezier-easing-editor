@@ -56,6 +56,10 @@ The page will reload if you make edits. You will also see any lint errors in the
 
 Runs tests in Jest
 
+### `npm run format`
+
+Formats everything with Prettier
+
 ### `npm run build`
 
 Using `vite-build.config.ts`, compiles and exports the TS library into `dist/main.js` and `dist/main.d.ts`.
