@@ -66,7 +66,7 @@ const Grid: React.FC<GridProps> = ({
     `M${x},${halfY} L${x + width},${halfY}`;
 
   return (
-    <g>
+    <g data-testid="grid">
       <rect
         x={x}
         y={y}
@@ -75,11 +75,12 @@ const Grid: React.FC<GridProps> = ({
         fill={backgroundColor}
         strokeWidth="1px"
         stroke={gridColor}
+        data-testid="grid-base"
       ></rect>
 
       {/* Gridlines */}
       {showGridlines && (
-        <g strokeWidth="1px" stroke={gridColor}>
+        <g strokeWidth="1px" stroke={gridColor} data-testid="gridlines">
           <path d={xLinesPath} />
           <path d={yLinesPath} />
         </g>
@@ -87,7 +88,7 @@ const Grid: React.FC<GridProps> = ({
 
       {/* Halflines */}
       {showHalflines && (
-        <g strokeWidth="2px" stroke={gridColor}>
+        <g strokeWidth="2px" stroke={gridColor} data-testid="halflines">
           <path d={halflinesPath} />
         </g>
       )}

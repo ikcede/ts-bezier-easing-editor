@@ -18,10 +18,10 @@ describe('BezierCurve', () => {
       </svg>
     );
     const path = container.querySelector('path')!;
-    expect(path.getAttribute('stroke')).toEqual('rgb(255, 255, 255)');
-    expect(path.getAttribute('stroke-width')).toEqual('3');
-    expect(path.getAttribute('fill')).toEqual('none');
-    expect(path.getAttribute('stroke-linecap')).toEqual('round');
+    expect(path).toHaveAttribute('stroke', 'rgb(255, 255, 255)');
+    expect(path).toHaveAttribute('stroke-width', '3');
+    expect(path).toHaveAttribute('fill', 'none');
+    expect(path).toHaveAttribute('stroke-linecap', 'round');
 
     // A default curve should also be generated
     const dAttribute = path.getAttribute('d');
@@ -40,8 +40,8 @@ describe('BezierCurve', () => {
       </svg>
     );
     const path = container.querySelector('path')!;
-    expect(path.getAttribute('stroke')).toEqual('red');
-    expect(path.getAttribute('stroke-width')).toEqual('5');
+    expect(path).toHaveAttribute('stroke', 'red');
+    expect(path).toHaveAttribute('stroke-width', '5');
   });
 
   it('uses custom bezier curve', () => {

@@ -1,7 +1,6 @@
-import React from 'react';
 import { render } from '@testing-library/react';
 import Knob from '../Knob';
-import { CubicBezier, Scale } from '../../util';
+import { Scale } from '../../util';
 import userEvent from '@testing-library/user-event';
 
 describe('Knob', () => {
@@ -33,10 +32,10 @@ describe('Knob', () => {
     );
     const line = container.querySelector('line');
     const knob = container.querySelectorAll('circle')[1];
-    expect(line!.getAttribute('stroke')).toEqual('rgb(230, 75, 61)');
-    expect(line!.getAttribute('stroke-width')).toEqual('3');
-    expect(knob!.getAttribute('fill')).toEqual('rgb(230, 75, 61)');
-    expect(knob!.getAttribute('r')).toEqual('8');
+    expect(line).toHaveAttribute('stroke', 'rgb(230, 75, 61)');
+    expect(line).toHaveAttribute('stroke-width', '3');
+    expect(knob).toHaveAttribute('fill', 'rgb(230, 75, 61)');
+    expect(knob).toHaveAttribute('r', '8');
   });
 
   it('applies custom colors and sizes', () => {
@@ -54,10 +53,10 @@ describe('Knob', () => {
     );
     const line = container.querySelector('line');
     const knob = container.querySelectorAll('circle')[1];
-    expect(line?.getAttribute('stroke')).toEqual('blue');
-    expect(line?.getAttribute('stroke-width')).toEqual('5');
-    expect(knob?.getAttribute('fill')).toEqual('red');
-    expect(knob?.getAttribute('r')).toEqual('10');
+    expect(line).toHaveAttribute('stroke', 'blue');
+    expect(line).toHaveAttribute('stroke-width', '5');
+    expect(knob).toHaveAttribute('fill', 'red');
+    expect(knob).toHaveAttribute('r', '10');
   });
 
   it('hides tail knob when showTailKnob is false', () => {
@@ -77,9 +76,9 @@ describe('Knob', () => {
     );
     const knob = container.querySelectorAll('circle')[1];
     await user.hover(knob);
-    expect(knob!.getAttribute('r')).toEqual('10');
+    expect(knob).toHaveAttribute('r', '10');
     await user.unhover(knob);
-    expect(knob!.getAttribute('r')).toEqual('8');
+    expect(knob).toHaveAttribute('r', '8');
   });
 
   it('does not change appearance on hover when useHover is false', async () => {
@@ -90,7 +89,7 @@ describe('Knob', () => {
     );
     const knob = container.querySelectorAll('circle')[1];
     await user.hover(knob);
-    expect(knob?.getAttribute('r')).toEqual('8');
+    expect(knob).toHaveAttribute('r', '8');
   });
 
   it('calls onDown when knob is clicked', async () => {
@@ -137,9 +136,9 @@ describe('Knob', () => {
       </svg>
     );
     const line = container.querySelector('line');
-    expect(line?.getAttribute('x1')).toEqual('0');
-    expect(line?.getAttribute('y1')).toEqual('300');
-    expect(line?.getAttribute('x2')).toEqual('75');
-    expect(line?.getAttribute('y2')).toEqual('225');
+    expect(line).toHaveAttribute('x1', '0');
+    expect(line).toHaveAttribute('y1', '300');
+    expect(line).toHaveAttribute('x2', '75');
+    expect(line).toHaveAttribute('y2', '225');
   });
 });
