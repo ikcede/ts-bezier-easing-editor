@@ -1,4 +1,4 @@
-import { range } from '../';
+import { range } from '..';
 
 describe('range function', () => {
   test('generates a range with positive integer step', () => {

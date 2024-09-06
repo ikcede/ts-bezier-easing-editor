@@ -13,10 +13,24 @@ interface BezierCurveProps extends ScaledComponent {
 }
 
 /**
- * Defines a bezier curve for CSS transitions
+ * Renders a cubic Bezier curve using SVG path.
  *
- * The curve is set to start at (0, 0) and end at (1, 1)
- * and can be scaled for display
+ * The curve is defined to start at (0, 0) and end at (1, 1) in
+ * its own coordinate system, which is then scaled to the desired
+ * display size. The curve's shape is controlled by two additional
+ * control points defined in the CubicBezier object.
+ *
+ * @component
+ * @example
+ * ```jsx
+ * <BezierCurve
+ *   color="red"
+ *   width={2}
+ *   bezier={new CubicBezier(0.4, 0, 0.6, 1)}
+ *   xScale={new Scale(0, 1, 0, 200)}
+ *   yScale={new Scale(0, 1, 200, 0)}
+ * />
+ * ```
  */
 const BezierCurve: React.FC<BezierCurveProps> = ({
   color = 'rgb(255, 255, 255)',
@@ -39,6 +53,7 @@ const BezierCurve: React.FC<BezierCurveProps> = ({
   const scaledX2 = xScale.scale(bezier.x2);
   const scaledY2 = yScale.scale(bezier.y2);
 
+  // Construct the SVG path data string
   const pathD =
     `M${startX},${startY} ` +
     `C${scaledX1},${scaledY1} ` +
