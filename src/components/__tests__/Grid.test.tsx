@@ -10,11 +10,24 @@ describe('Grid', () => {
     );
     expect(screen.getByTestId('grid')).toBeInTheDocument();
 
+    const gridBase = screen.getByTestId('grid-base');
+    expect(gridBase).toHaveAttribute('x', '0');
+    expect(gridBase).toHaveAttribute('y', '0');
+    expect(gridBase).toHaveAttribute('width', '300');
+    expect(gridBase).toHaveAttribute('height', '300');
+    expect(gridBase).toHaveAttribute('fill', 'rgb(40, 40, 46)');
+    expect(gridBase).toHaveAttribute('stroke', 'rgb(0, 0, 0)');
+    expect(gridBase).toHaveAttribute('stroke-width', '1px');
+
     const gridlines = screen.getByTestId('gridlines');
+    expect(gridlines).toHaveAttribute('stroke', 'rgb(0, 0, 0)');
+    expect(gridlines).toHaveAttribute('stroke-width', '1px');
     expect(gridlines.querySelectorAll('path')).toHaveLength(2);
 
     const halflines = screen.getByTestId('halflines');
-    expect(halflines.querySelectorAll('path')).toHaveLength(2);
+    expect(halflines).toHaveAttribute('stroke', 'rgb(0, 0, 0)');
+    expect(halflines).toHaveAttribute('stroke-width', '1px');
+    expect(halflines.querySelectorAll('path')).toHaveLength(1);
   });
 
   it('does not render gridlines when showGridlines is false', () => {
