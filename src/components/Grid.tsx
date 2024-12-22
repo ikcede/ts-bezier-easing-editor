@@ -2,37 +2,43 @@ import React from 'react';
 import { range } from '../util';
 
 interface GridProps {
-  /** X position of the grid within its parent SVG */
+  /** X position of the grid's top-left within its parent SVG */
   x?: number;
 
-  /** Y position of the grid within its parent SVG */
+  /** Y position of the grid's top-left within its parent SVG */
   y?: number;
 
-  /** Width of the grid in pixels */
+  /** Width of the grid in pixels, default 300 */
   width?: number;
 
-  /** Height of the grid in pixes */
+  /** Height of the grid in pixels, default 300 */
   height?: number;
 
-  /** Number of columns (col gridlines = cols - 1) */
+  /** Number of columns in the grid. Default is 4. */
   cols?: number;
 
-  /** Number of rows (row gridlines = rows - 1) */
+  /** Number of rows in the grid. Default is 4. */
   rows?: number;
 
-  /** Color of the background fill */
+  /** Color of the background fill, default: rgb(40, 40, 46) */
   backgroundColor?: string;
 
-  /** Color of the gridlines and borders */
+  /** Color of the gridlines and borders, defaults to white */
   gridColor?: string;
 
-  /** Show or hide the gridlines */
+  /** Whether to show grid lines. Default is true. */
   showGridlines?: boolean;
 
-  /** Show or hide additional half gridlines */
+  /** Whether to show half lines. Default is true. */
   showHalflines?: boolean;
 }
 
+/**
+ * A customizable SVG grid
+ * 
+ * @param props - GridProps
+ * @returns An SVG group representing a grid
+ */
 const Grid: React.FC<GridProps> = ({
   x = 0,
   y = 0,
