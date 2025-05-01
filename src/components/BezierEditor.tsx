@@ -1,4 +1,11 @@
-import React from 'react';
+import {
+  FC,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import { Grid, BezierCurve, Knob } from '.';
 import { CubicBezier, Scale } from '../util';
 
@@ -98,7 +105,7 @@ export interface BezierEditorProps {
   curveWidth?: number;
 }
 
-const BezierEditor: React.FC<BezierEditorProps> = ({
+const BezierEditor: FC<BezierEditorProps> = ({
   /////////// Editor default props ///////////
   width = 500,
   height = 500,
@@ -136,40 +143,38 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   curveColor = 'rgb(255, 255, 255)',
   curveWidth = 3,
 }) => {
-  const [downKnob1, setDownKnob1] = React.useState(false);
-  const [downKnob2, setDownKnob2] = React.useState(false);
-  const [bezierValue, setBezierValue] = React.useState(
-    bezier || initialBezier
-  );
+  const [downKnob1, setDownKnob1] = useState(false);
+  const [downKnob2, setDownKnob2] = useState(false);
 
-  const svgRef = React.createRef<SVGSVGElement>();
+  const svgRef = useRef<SVGSVGElement>(null);
+  const bezierRef = useRef<CubicBezier>(bezier || initialBezier);
 
   const x = padding;
   const y = padding;
   const gridWidth = width - padding * 2;
   const gridHeight = height - padding * 2;
 
-  const xScale = React.useMemo(
+  const xScale = useMemo(
     () => new Scale(0, 1, x, x + gridWidth),
     [x, gridWidth]
   );
 
-  const yScale = React.useMemo(
+  const yScale = useMemo(
     () => new Scale(0, 1, y + gridHeight, y),
     [y, gridHeight]
   );
 
-  const handleDownKnob1 = React.useCallback(() => {
+  const handleDownKnob1 = useCallback(() => {
     setDownKnob1(true);
   }, []);
 
-  const handleDownKnob2 = React.useCallback(() => {
+  const handleDownKnob2 = useCallback(() => {
     setDownKnob2(true);
   }, []);
 
   // Calculate the x and y values of the mouse position
   // constrained to the SVG
-  const calculatePosition = React.useCallback(
+  const calculatePosition = useCallback(
     (x: number, y: number) => {
       const rect = svgRef.current!.getBoundingClientRect();
 
@@ -193,17 +198,20 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     [svgRef, height, width]
   );
 
-  React.useEffect(() => {
+  // Update the bezier value when the prop changes
+  useEffect(() => {
     if (bezier !== undefined) {
-      setBezierValue(bezier);
+      bezierRef.current = bezier;
     }
   }, [bezier]);
 
   // Set up a window listener so that moving the mouse out
   // of the SVG doesn't stop the drag
-  React.useEffect(() => {
+  useEffect(() => {
     // Use one move handler for both mouse and touch events
     const handleMove = (event: UIEvent) => {
+      if (!svgRef.current || !bezierRef.current) return;
+
       let isValidMove = false;
       let xVal = 0;
       let yVal = 0;
@@ -221,11 +229,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
         yVal = touch.clientY;
       }
 
-      if (
-        isValidMove &&
-        (downKnob1 || downKnob2) &&
-        svgRef.current !== null
-      ) {
+      if (isValidMove && (downKnob1 || downKnob2)) {
         const position = calculatePosition(xVal, yVal);
 
         let newBezier: CubicBezier;
@@ -233,25 +237,23 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
           newBezier = new CubicBezier(
             xScale.inverse(position[0]),
             yScale.inverse(position[1]),
-            bezierValue.x2,
-            bezierValue.y2
+            bezierRef.current.x2,
+            bezierRef.current.y2
           );
         } else {
           newBezier = new CubicBezier(
-            bezierValue.x1,
-            bezierValue.y1,
+            bezierRef.current.x1,
+            bezierRef.current.y1,
             xScale.inverse(position[0]),
             yScale.inverse(position[1])
           );
         }
 
-        setBezierValue(newBezier!);
-        onChange(newBezier!);
+        bezierRef.current = newBezier;
+        onChange(newBezier);
       } else if (downKnob1 || downKnob2) {
-        if (svgRef.current !== null) {
-          setDownKnob1(false);
-          setDownKnob2(false);
-        }
+        setDownKnob1(false);
+        setDownKnob2(false);
       }
     };
 
@@ -265,6 +267,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     window.addEventListener('touchmove', handleMove);
     window.addEventListener('touchend', handleTouchEnd);
     window.addEventListener('touchcancel', handleTouchEnd);
+
     return () => {
       window.removeEventListener('mousemove', handleMove);
       window.removeEventListener('touchmove', handleMove);
@@ -275,7 +278,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
     downKnob1,
     downKnob2,
     svgRef,
-    bezierValue,
+    bezierRef,
     calculatePosition,
     xScale,
     yScale,
@@ -283,7 +286,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   ]);
 
   /// Disables touch scrolling on the editor for better UX
-  React.useEffect(() => {
+  useEffect(() => {
     const handleTouchStart = (event: TouchEvent) => {
       event.preventDefault();
     };
@@ -294,7 +297,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
   }, [svgRef.current]);
 
   const sharedKnobProps = {
-    bezier: bezierValue,
+    bezier: bezierRef.current,
     xScale: xScale,
     yScale: yScale,
 
@@ -330,7 +333,7 @@ const BezierEditor: React.FC<BezierEditorProps> = ({
       ></Grid>
 
       <BezierCurve
-        bezier={bezierValue}
+        bezier={bezierRef.current}
         xScale={xScale}
         yScale={yScale}
         color={curveColor}

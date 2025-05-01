@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC, memo } from 'react';
 import { range } from '../util';
 
 interface GridProps {
@@ -35,11 +35,11 @@ interface GridProps {
 
 /**
  * A customizable SVG grid
- * 
+ *
  * @param props - GridProps
  * @returns An SVG group representing a grid
  */
-const Grid: React.FC<GridProps> = ({
+const Grid: FC<GridProps> = ({
   x = 0,
   y = 0,
   width = 300,
@@ -102,4 +102,4 @@ const Grid: React.FC<GridProps> = ({
   );
 };
 
-export default React.memo(Grid);
+export default memo(Grid);

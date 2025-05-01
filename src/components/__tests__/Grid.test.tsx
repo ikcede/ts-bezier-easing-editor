@@ -26,7 +26,7 @@ describe('Grid', () => {
 
     const halflines = screen.getByTestId('halflines');
     expect(halflines).toHaveAttribute('stroke', 'rgb(0, 0, 0)');
-    expect(halflines).toHaveAttribute('stroke-width', '1px');
+    expect(halflines).toHaveAttribute('stroke-width', '2px');
     expect(halflines.querySelectorAll('path')).toHaveLength(1);
   });
 

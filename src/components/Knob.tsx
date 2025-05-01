@@ -1,4 +1,4 @@
-import React from 'react';
+import { createRef, FC, useEffect, useRef, useState } from 'react';
 import { CubicBezier, Scale, ScaledComponent } from '../util';
 
 export type KnobDownFunction = () => void;
@@ -83,7 +83,7 @@ interface KnobProps extends ScaledComponent {
  * />
  * ```
  */
-const Knob: React.FC<KnobProps> = ({
+const Knob: FC<KnobProps> = ({
   bezier = new CubicBezier(0.25, 0.25, 0.75, 0.75),
   control = 1,
   knobColor = 'rgb(230, 75, 61)',
@@ -108,8 +108,8 @@ const Knob: React.FC<KnobProps> = ({
   xScale = new Scale(0, 1, 0, 300),
   yScale = new Scale(0, 1, 300, 0),
 }) => {
-  const [hover, setHover] = React.useState(false);
-  const knobRef = React.createRef<SVGCircleElement>();
+  const [hover, setHover] = useState(false);
+  const knobRef = useRef<SVGCircleElement>(null);
 
   const tailX = xScale.scale(control === 1 ? 0 : 1);
   const tailY = yScale.scale(control === 1 ? 0 : 1);
@@ -130,13 +130,15 @@ const Knob: React.FC<KnobProps> = ({
   };
 
   // Manually set up the event listener to prevent scrolling
-  React.useEffect(() => {
+  useEffect(() => {
+    if (!knobRef.current) return;
+
     const handleTouchStart = (event: TouchEvent) => {
       event.preventDefault();
       onDown();
     };
 
-    knobRef.current!.addEventListener('touchstart', handleTouchStart, {
+    knobRef.current.addEventListener('touchstart', handleTouchStart, {
       passive: false,
     });
   }, [knobRef, onDown]);

@@ -38,9 +38,10 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^4.3.1",
-    "vite": "^5.3.3"
+    "vite": "^6.3.4"
   },
   "devDependencies": {
+    "@simbathesailor/use-what-changed": "^2.0.0",
     "@storybook/addon-essentials": "^8.2.1",
     "@storybook/addon-interactions": "^8.2.1",
     "@storybook/blocks": "^8.2.1",

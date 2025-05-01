@@ -1,4 +1,4 @@
-import React from 'react';
+import { FC } from 'react';
 import { CubicBezier, Scale, ScaledComponent } from '../util';
 
 interface BezierCurveProps extends ScaledComponent {
@@ -32,7 +32,7 @@ interface BezierCurveProps extends ScaledComponent {
  * />
  * ```
  */
-const BezierCurve: React.FC<BezierCurveProps> = ({
+const BezierCurve: FC<BezierCurveProps> = ({
   color = 'rgb(255, 255, 255)',
   width = 3,
   bezier = new CubicBezier(0.25, 0.25, 0.75, 0.75),

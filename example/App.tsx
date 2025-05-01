@@ -1,6 +1,7 @@
-import React from 'react';
-import './App.css';
+import React, { useCallback } from 'react';
 import { BezierEditor, CubicBezier } from '../src/components';
+
+import './App.css';
 
 const textTimingMap: {
   [key: string]: [string, string, string, string];
@@ -20,11 +21,14 @@ function App() {
     '0.75',
   ]);
 
-  const onBezierChange = (newBezier?: CubicBezier) => {
-    if (newBezier !== undefined) {
-      setBezier([...newBezier.toStringArray()]);
-    }
-  };
+  const onBezierChange = useCallback(
+    (newBezier?: CubicBezier) => {
+      if (newBezier !== undefined) {
+        setBezier([...newBezier.toStringArray()]);
+      }
+    },
+    [setBezier]
+  );
 
   const changeBezierValue = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
