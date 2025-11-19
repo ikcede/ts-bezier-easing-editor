@@ -25,6 +25,7 @@
     "start": "vite",
     "build": "tsc && vite build --config vite-build.config.mts",
     "test": "jest --watch",
+    "test:publish": "jest",
     "format": "prettier --write .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
